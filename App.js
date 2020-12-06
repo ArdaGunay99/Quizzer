@@ -26,24 +26,6 @@ const AppNavigator = createStackNavigator(
           return null;
         },
         headerTitle: 'Home',
-        // headerRight: () => {
-        //   return (
-        //     <TouchableOpacity
-        //       onPress={() => {
-        //         console.log('pressed');
-        //         navigate('Login');
-        //       }}>
-        //       <Text
-        //         style={{
-        //           color: '#056096',
-        //           fontWeight: 'bold',
-        //           margin: 10,
-        //         }}>
-        //         Logout
-        //       </Text>
-        //     </TouchableOpacity>
-        //   );
-        // },
       },
     },
   },
