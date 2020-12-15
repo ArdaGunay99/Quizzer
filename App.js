@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-
+import QuizStarter from './components/QuizStarter';
 import LoginScreen from './components/Login';
 import RegisterScreen from './components/Register';
 import HomeScreen from './components/Home';
@@ -18,7 +18,13 @@ const AppNavigator = createStackNavigator(
         headerTitle: 'Login',
       },
     },
-    Register: {screen: RegisterScreen},
+    Register: {screen: RegisterScreen,},
+    QuizStarter: {
+        screen: QuizStarter,
+        navigationOptions: {
+            headerTitle: 'Start',
+        },
+    },
     Home: {
       screen: HomeScreen,
       navigationOptions: {
