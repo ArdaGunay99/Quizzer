@@ -5,7 +5,6 @@ import QuizStarter from './components/QuizStarter';
 import LoginScreen from './components/Login';
 import RegisterScreen from './components/Register';
 import HomeScreen from './components/Home';
-import {Text, TouchableOpacity} from 'react-native';
 
 const AppNavigator = createStackNavigator(
   {
@@ -18,12 +17,9 @@ const AppNavigator = createStackNavigator(
         headerTitle: 'Login',
       },
     },
-    Register: {screen: RegisterScreen,},
+    Register: {screen: RegisterScreen},
     QuizStarter: {
-        screen: QuizStarter,
-        navigationOptions: {
-            headerTitle: 'Start',
-        },
+      screen: QuizStarter,
     },
     Home: {
       screen: HomeScreen,

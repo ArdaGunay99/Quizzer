@@ -5,6 +5,8 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  SafeAreaView,
+  ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -30,6 +32,15 @@ class Home extends Component {
     };
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      token: null,
+      quizes: null,
+    };
+  }
+
   componentDidMount() {
     this.getToken();
 
@@ -37,35 +48,43 @@ class Home extends Component {
   }
 
   render() {
+    console.log('Rendered', this.state);
+
+    if (!this.state.token) {
+      this.getToken();
+      return <View style={styles.main} />;
+    }
+
+    if (!this.state.quizes) {
+      this.getQuizes();
+      return <View style={styles.main} />;
+    }
+
+    console.log(this.state.quizes);
+
     return (
       <View style={styles.main}>
         <Text style={styles.upperText}>Select a category</Text>
-        <View style={styles.boxContainer}>
-          <TouchableOpacity  onPress={() => this.props.navigation.navigate('QuizStarter')}  style={styles.music}>
-            <Text style={styles.categoryText}>Music</Text>
-            <Icon name="music" size={35}/>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('QuizStarter')}  style={styles.sports}>
-            <Text style={styles.categoryText}>Sports</Text>
-            <Icon name="football-ball" size={35}/>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('QuizStarter')}  style={styles.science}>
-            <Text style={styles.categoryText}>Science</Text>
-            <Icon name="radiation" size={35}/>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('QuizStarter')}  style={styles.art}>
-            <Text style={styles.categoryText}>Art</Text>
-            <Icon name="paint-brush" size={35}/>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('QuizStarter')}  style={styles.movies}>
-            <Text style={styles.categoryText}>Movies</Text>
-            <Icon name="video" size={35}/>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('QuizStarter')}  style={styles.history}>
-            <Text style={styles.categoryText}>History</Text>
-            <Icon name="book" size={35}/>
-          </TouchableOpacity>
-        </View>
+        <SafeAreaView style={styles.scroll_container}>
+          <ScrollView contentContainerStyle={styles.scrollView}>
+            {this.state.quizes.map((quiz) => {
+              return (
+                <TouchableOpacity
+                  key={quiz.id}
+                  onPress={() =>
+                    this.props.navigation.navigate('QuizStarter', {
+                      quizId: quiz.id,
+                      quizName: quiz.name,
+                    })
+                  }
+                  style={styles.topic}>
+                  <Text style={styles.categoryText}>{quiz.name}</Text>
+                  <Icon name={quiz.icon_name} size={35} />
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+        </SafeAreaView>
       </View>
     );
   }
@@ -74,12 +93,30 @@ class Home extends Component {
     console.log('Getting token');
     try {
       const token = await AsyncStorage.getItem('token');
-      console.log(token);
       if (token == null) {
         this.props.navigation.navigate('Login');
+      } else {
+        this.setState({token});
       }
     } catch (e) {
       // Exception handling
+    }
+  };
+
+  getQuizes = async () => {
+    console.log('Getting quizes');
+    const token = await AsyncStorage.getItem('token');
+    const data = await fetch('https://se380api.herokuapp.com/quiz', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+    });
+    const resp = await data.json();
+    if (resp.success) {
+      this.setState({quizes: resp.quizes, token});
     }
   };
 
@@ -95,15 +132,15 @@ class Home extends Component {
 }
 
 const styles = StyleSheet.create({
-  upperText:{
-    fontSize:24,
+  upperText: {
+    fontSize: 24,
     fontWeight: 'bold',
-    marginTop:70,
-    marginBottom:20,
-    marginLeft:110,
+    marginTop: 70,
+    marginBottom: 20,
+    marginLeft: 110,
   },
 
-  categoryText:{
+  categoryText: {
     fontSize: 24,
     fontWeight: 'bold',
     fontStyle: 'italic',
@@ -116,80 +153,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  boxContainer: {
-    flex:2,
-    flexWrap: 'wrap',
-    backgroundColor: '#e3b579',
-    justifyContent: 'space-around',
-    alignContent: 'space-around',
+  scroll_container: {
+    flex: 1,
+  },
+  scrollView: {
+    flexGrow: 1,
+    alignItems: 'center',
   },
 
-  music:{
-    width: 100,
-    backgroundColor: 'crimson',
+  topic: {
+    width: '75%',
+    backgroundColor: 'grey',
     height: 100,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom:20,
-    marginTop:10,
+    margin: 5,
   },
-
-  sports:{
-    width: 100,
-    backgroundColor: 'dodgerblue',
-    height: 100,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom:20,
-    marginTop:10,
-  },
-
-  movies:{
-    width: 100,
-    backgroundColor: 'gold',
-    height: 100,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom:20,
-    marginTop:10,
-  },
-
-  science:{
-    width: 100,
-    backgroundColor: 'lawngreen',
-    height: 100,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom:20,
-    marginTop:10,
-  },
-
-  history:{
-    width: 100,
-    backgroundColor: 'blueviolet',
-    height: 100,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom:20,
-    marginTop:10,
-  },
-
-  art:{
-    width: 100,
-    backgroundColor: 'chocolate',
-    height: 100,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom:20,
-    marginTop:10,
-  },
-
 });
 
 export default Home;
