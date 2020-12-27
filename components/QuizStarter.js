@@ -12,7 +12,7 @@ class QuizStarter extends Component {
     console.log(this.props.navigation.getParam('quizId'));
     return (
       <View style={styles.main}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Quiz')}>
           <Text style={styles.text}>Start Quiz</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>

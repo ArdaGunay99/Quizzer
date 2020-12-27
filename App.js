@@ -5,6 +5,7 @@ import QuizStarter from './components/QuizStarter';
 import LoginScreen from './components/Login';
 import RegisterScreen from './components/Register';
 import HomeScreen from './components/Home';
+import Quiz from './components/Quiz';
 
 const AppNavigator = createStackNavigator(
   {
@@ -17,9 +18,14 @@ const AppNavigator = createStackNavigator(
         headerTitle: 'Login',
       },
     },
-    Register: {screen: RegisterScreen},
+    Register: {
+        screen: RegisterScreen
+    },
     QuizStarter: {
       screen: QuizStarter,
+    },
+    Quiz:{
+        screen: Quiz,
     },
     Home: {
       screen: HomeScreen,
