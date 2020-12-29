@@ -74,17 +74,17 @@ class Quiz extends Component{
         this.PickColor = this.PickColor.bind(this);
 
     }
-   /* componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps, prevState) {
         // not sure if the below code should be here or inside QuestionAnswered()
         // it is basically aimed to show the right answer for 3 seconds and then increment the question index by 1 so we move to the next question
         if(this.state.isAnswered === true){
             if(this.state.questionIndex+1 === this.state.questions.length){
-                setTimeout(this.setState({finished: true, isAnswered: false}),3000);
+                setTimeout(()=>this.setState({finished: true, isAnswered: false}),3000);
             }
-            else setTimeout(this.setState(previousState =>({questionIndex: previousState.questionIndex+1, isAnswered: false})),3000);
+            else setTimeout(()=>this.setState(previousState =>({questionIndex: previousState.questionIndex+1, isAnswered: false})),3000);
 
         }
-    }*/
+    }
 
     // this function will be called inside the OnPress prop of the TouchableOpacities like onPress={this.QuestionAnswered("A")}.
     // Currently when I try this, component crashes without rendering and says infinite loop happened...
@@ -123,34 +123,34 @@ class Quiz extends Component{
 
     render() {
         //this will be returned if the finished is true to indicate the end of the quiz
-        /*if(this.state.finished === true){
+        if(this.state.finished === true){
             return(<View style={styles.main}>
                 <Text>QUIZ FINISHED</Text>
             </View>)
-        }*/
+        }
 
         return(
             <View style={styles.main}>
                 <View style={styles.UpperRow}>
-                    <CountDown style={styles.countdown}  until={15} size={12} timeToShow={['S']} timeLabels={{s: ''}}/>
+                    <CountDown id={this.state.questionIndex} onFinish={()=> this.QuestionAnswered("E")} running={!this.state.isAnswered} style={styles.countdown}  until={15} size={12} timeToShow={['S']} timeLabels={{s: ''}}/>
                     <Text style={styles.questionCount}>{this.state.questionIndex+1}/{this.state.questions.length}</Text>
                     <Text style={styles.points}>points: {this.state.points}</Text>
                 </View>
                 <Text style={styles.question}>{this.state.questions[this.state.questionIndex].text}</Text>
 
-                <TouchableOpacity   style={this.PickColor("A")}>
+                <TouchableOpacity onPress={()=>this.QuestionAnswered("A")}  style={this.PickColor("A")}>
                     <Text>{this.state.questions[this.state.questionIndex].answers.A}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity   style={this.PickColor("B")}>
+                <TouchableOpacity  onPress={()=>this.QuestionAnswered("B")} style={this.PickColor("B")}>
                     <Text>{this.state.questions[this.state.questionIndex].answers.B}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity   style={this.PickColor("C")}>
+                <TouchableOpacity onPress={()=>this.QuestionAnswered("C")}  style={this.PickColor("C")}>
                     <Text>{this.state.questions[this.state.questionIndex].answers.C}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity   style={this.PickColor("D")}>
+                <TouchableOpacity  onPress={()=>this.QuestionAnswered("D")} style={this.PickColor("D")}>
                     <Text>{this.state.questions[this.state.questionIndex].answers.D}</Text>
                 </TouchableOpacity>
             </View>
