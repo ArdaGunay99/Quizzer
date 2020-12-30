@@ -28,8 +28,8 @@ class Register extends Component {
         <View style={styles.input}>
           <TextInput
             style={styles.inputText}
-            placeholder="Username..."
-            placeholderTextColor="#3c2d2d"
+            placeholder="Username"
+            placeholderTextColor='white'
             onChangeText={(val) => this.setState({username: val})}
           />
         </View>
@@ -37,8 +37,8 @@ class Register extends Component {
           <TextInput
             secureTextEntry
             style={styles.inputText}
-            placeholder="Password..."
-            placeholderTextColor="#3c2d2d"
+            placeholder="Password"
+            placeholderTextColor='white'
             onChangeText={(val) => this.setState({pass: val})}
           />
         </View>
@@ -46,8 +46,8 @@ class Register extends Component {
           <TextInput
             secureTextEntry
             style={styles.inputText}
-            placeholder="Confirm Password..."
-            placeholderTextColor="#3c2d2d"
+            placeholder="Confirm Password"
+            placeholderTextColor='white'
             onChangeText={(val) => this.setState({passConfirm: val})}
           />
         </View>
@@ -93,19 +93,19 @@ class Register extends Component {
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    backgroundColor: '#e3b579',
+    backgroundColor: 'rgba(31,178,204,1)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   appName: {
     fontWeight: 'bold',
     fontSize: 50,
-    color: '#3c2d2d',
+    color: 'rgba(255,255,255,1)',
     marginBottom: 40,
   },
   input: {
     width: '80%',
-    backgroundColor: '#8d8d8d',
+    backgroundColor: 'rgba(251,247,247,0.25)',
     borderRadius: 25,
     height: 50,
     marginBottom: 20,
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
 
   register: {
     width: '30%',
-    backgroundColor: '#3c2d2d',
+    backgroundColor: 'rgba(21,31,40,1)',
     borderRadius: 25,
     height: 50,
     alignItems: 'center',

@@ -64,7 +64,7 @@ class Home extends Component {
 
     return (
       <View style={styles.main}>
-        <Text style={styles.upperText}>Select a category</Text>
+        <Text style={styles.upperText}>CATEGORIES</Text>
         <SafeAreaView style={styles.scroll_container}>
           <ScrollView contentContainerStyle={styles.scrollView}>
             {this.state.quizes.map((quiz) => {
@@ -134,10 +134,11 @@ class Home extends Component {
 const styles = StyleSheet.create({
   upperText: {
     fontSize: 24,
+    color: 'white',
     fontWeight: 'bold',
     marginTop: 70,
     marginBottom: 20,
-    marginLeft: 110,
+    marginLeft: 120,
   },
 
   categoryText: {
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
 
   main: {
     flex: 1,
-    backgroundColor: '#e3b579',
+    backgroundColor: 'rgba(31,178,204,1)',
     justifyContent: 'center',
   },
 
@@ -163,9 +164,11 @@ const styles = StyleSheet.create({
 
   topic: {
     width: '75%',
-    backgroundColor: 'grey',
+    backgroundColor: 'rgba(21,31,40,0.30)',
     height: 100,
     borderRadius: 10,
+    borderColor: 'rgba(21,31,40,1)',
+    borderWidth: 3,
     alignItems: 'center',
     justifyContent: 'center',
     margin: 5,

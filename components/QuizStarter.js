@@ -13,10 +13,10 @@ class QuizStarter extends Component {
     return (
       <View style={styles.main}>
         <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Quiz')}>
-          <Text style={styles.text}>Start Quiz</Text>
+          <Text style={styles.text}>START QUIZ</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.text}>See Leaderboard</Text>
+          <Text style={styles.text}>LEADERBOARD</Text>
         </TouchableOpacity>
       </View>
     );
@@ -25,14 +25,16 @@ class QuizStarter extends Component {
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    backgroundColor: '#e3b579',
-    justifyContent: 'space-around',
+    backgroundColor: 'rgba(31,178,204,1)',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   button: {
     width: 200,
-    backgroundColor: '#3c2d2d',
+    backgroundColor:'rgba(21,31,40,0.30)',
     borderRadius: 25,
+    borderColor: 'rgba(21,31,40,1)',
+    borderWidth: 3,
     height: 100,
     alignItems: 'center',
     justifyContent: 'center',

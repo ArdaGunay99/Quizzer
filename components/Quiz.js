@@ -126,8 +126,8 @@ class Quiz extends Component{
         if(this.state.finished === true){
             return(
                 <View style={styles.resultsMain}>
-                    <Text>QUIZ FINISHED</Text>
-                    <Text>Score: {this.state.points}</Text>
+                    <Text style={styles.answerText}>QUIZ FINISHED</Text>
+                    <Text style={styles.answerText}>Score: {this.state.points}</Text>
                     <TouchableOpacity style={styles.resultsButton} onPress={() => this.props.navigation.navigate('QuizStarter')}>
                         <Text style={styles.resultsText}>TRY AGAIN</Text>
                     </TouchableOpacity>
@@ -143,24 +143,24 @@ class Quiz extends Component{
                 <View style={styles.UpperRow}>
                     <CountDown id={this.state.questionIndex} onFinish={()=> this.QuestionAnswered("E")} running={!this.state.isAnswered} style={styles.countdown}  until={15} size={12} timeToShow={['S']} timeLabels={{s: ''}}/>
                     <Text style={styles.questionCount}>{this.state.questionIndex+1}/{this.state.questions.length}</Text>
-                    <Text style={styles.points}>points: {this.state.points}</Text>
+                    <Text style={styles.points}>score: {this.state.points}</Text>
                 </View>
                 <Text style={styles.question}>{this.state.questions[this.state.questionIndex].text}</Text>
 
                 <TouchableOpacity onPress={()=>this.QuestionAnswered("A")}  style={this.PickColor("A")}>
-                    <Text>{this.state.questions[this.state.questionIndex].answers.A}</Text>
+                    <Text style={styles.answerText}>{this.state.questions[this.state.questionIndex].answers.A}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity  onPress={()=>this.QuestionAnswered("B")} style={this.PickColor("B")}>
-                    <Text>{this.state.questions[this.state.questionIndex].answers.B}</Text>
+                    <Text style={styles.answerText}>{this.state.questions[this.state.questionIndex].answers.B}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={()=>this.QuestionAnswered("C")}  style={this.PickColor("C")}>
-                    <Text>{this.state.questions[this.state.questionIndex].answers.C}</Text>
+                    <Text style={styles.answerText}>{this.state.questions[this.state.questionIndex].answers.C}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity  onPress={()=>this.QuestionAnswered("D")} style={this.PickColor("D")}>
-                    <Text>{this.state.questions[this.state.questionIndex].answers.D}</Text>
+                    <Text style={styles.answerText}>{this.state.questions[this.state.questionIndex].answers.D}</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -170,17 +170,19 @@ const styles = StyleSheet.create({
     questionCount: {
         flex: 1,
         fontSize: 24,
+        color: 'white',
         fontWeight: 'bold',
         marginLeft: 70,
     },
     countdown:{
         flex: 1,
-        backgroundColor: '#3eb70f',
+        backgroundColor:'rgba(21,31,40,1)',
     },
     points: {
         flex: 1,
         fontSize: 24,
         fontWeight: 'bold',
+        color: 'white',
         // marginTop: 70,
         //marginBottom: 20,
        //marginLeft: 150,
@@ -190,7 +192,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         //width: 30,
         height: 30,
-        backgroundColor: '#3eb70f',
+        backgroundColor: 'rgba(21,31,40,1)',
         justifyContent: 'space-between'
     },
     categoryText: {
@@ -202,29 +204,42 @@ const styles = StyleSheet.create({
     main: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#e3b579',
+        backgroundColor: 'rgba(31,178,204,1)',
         justifyContent: 'flex-start',
         alignItems:'stretch',
     },
     question: {
         width: '75%',
-        backgroundColor: 'white',
+        color: 'white',
+        fontSize: 20,
+        backgroundColor: 'rgba(31,178,204,1)',
+        fontWeight: 'bold',
         height: 100,
         borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20,
+        marginLeft: 50,
+    },
+    answer:{
+        fontWeight: 'bold',
+        color: 'white',
+        width: '75%',
+        backgroundColor: 'rgba(21,31,40,0.30)',
+        height: 100,
+        borderRadius: 10,
+        borderColor: 'rgba(21,31,40,1)',
+        borderWidth: 3,
+        fontSize: 50,
         alignItems: 'center',
         justifyContent: 'center',
         margin: 5,
         marginLeft: 50,
     },
-    answer:{
-        width: '75%',
-        backgroundColor: 'grey',
-        height: 100,
-        borderRadius: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: 5,
-        marginLeft: 50,
+    answerText:{
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold',
     },
     rightAnswer:{
         width: '75%',
@@ -248,14 +263,16 @@ const styles = StyleSheet.create({
     },
     resultsMain: {
         flex: 1,
-        backgroundColor: '#e3b579',
-        justifyContent: 'space-around',
+        backgroundColor: 'rgba(31,178,204,1)',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     resultsButton: {
         width: 200,
-        backgroundColor: '#3c2d2d',
+        backgroundColor: 'rgba(21,31,40,0.30)',
         borderRadius: 25,
+        borderColor: 'rgba(21,31,40,1)',
+        borderWidth: 3,
         height: 100,
         alignItems: 'center',
         justifyContent: 'center',
