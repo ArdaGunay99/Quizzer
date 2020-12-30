@@ -22,7 +22,7 @@ const AppNavigator = createStackNavigator(
         screen: RegisterScreen
     },
     QuizStarter: {
-      screen: QuizStarter,
+        screen: QuizStarter,
     },
     Quiz:{
         screen: Quiz,

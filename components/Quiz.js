@@ -124,9 +124,18 @@ class Quiz extends Component{
     render() {
         //this will be returned if the finished is true to indicate the end of the quiz
         if(this.state.finished === true){
-            return(<View style={styles.main}>
-                <Text>QUIZ FINISHED</Text>
-            </View>)
+            return(
+                <View style={styles.resultsMain}>
+                    <Text>QUIZ FINISHED</Text>
+                    <Text>Score: {this.state.points}</Text>
+                    <TouchableOpacity style={styles.resultsButton} onPress={() => this.props.navigation.navigate('QuizStarter')}>
+                        <Text style={styles.resultsButtonText}>TRY AGAIN</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.resultsButton} onPress={() => this.props.navigation.navigate('Home')}>
+                        <Text style={styles.resultsButtonText}>RETURN HOME</Text>
+                    </TouchableOpacity>
+                </View>
+            )
         }
 
         return(
@@ -236,6 +245,27 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         margin: 5,
         marginLeft: 50,
+    },
+    resultsMain: {
+        flex: 1,
+        backgroundColor: '#e3b579',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+    },
+    resultsButton: {
+        width: 200,
+        backgroundColor: '#3c2d2d',
+        borderRadius: 25,
+        height: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20,
+        marginBottom: 10,
+    },
+    resultsButtonText: {
+        color: 'white',
+        fontSize: 24,
+        fontWeight: 'bold',
     },
 });
 
