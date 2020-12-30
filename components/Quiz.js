@@ -129,10 +129,10 @@ class Quiz extends Component{
                     <Text>QUIZ FINISHED</Text>
                     <Text>Score: {this.state.points}</Text>
                     <TouchableOpacity style={styles.resultsButton} onPress={() => this.props.navigation.navigate('QuizStarter')}>
-                        <Text style={styles.resultsButtonText}>TRY AGAIN</Text>
+                        <Text style={styles.resultsText}>TRY AGAIN</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.resultsButton} onPress={() => this.props.navigation.navigate('Home')}>
-                        <Text style={styles.resultsButtonText}>RETURN HOME</Text>
+                        <Text style={styles.resultsText}>RETURN HOME</Text>
                     </TouchableOpacity>
                 </View>
             )
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 10,
     },
-    resultsButtonText: {
+    resultsText: {
         color: 'white',
         fontSize: 24,
         fontWeight: 'bold',
