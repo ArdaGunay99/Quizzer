@@ -6,6 +6,7 @@ import LoginScreen from './components/Login';
 import RegisterScreen from './components/Register';
 import HomeScreen from './components/Home';
 import Quiz from './components/Quiz';
+import Scores from './components/Scores';
 
 const AppNavigator = createStackNavigator(
   {
@@ -19,13 +20,16 @@ const AppNavigator = createStackNavigator(
       },
     },
     Register: {
-        screen: RegisterScreen
+      screen: RegisterScreen,
     },
     QuizStarter: {
-        screen: QuizStarter,
+      screen: QuizStarter,
     },
-    Quiz:{
-        screen: Quiz,
+    Quiz: {
+      screen: Quiz,
+    },
+    Scores: {
+      screen: Scores,
     },
     Home: {
       screen: HomeScreen,

@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  AsyncStorage,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 class QuizStarter extends Component {
   static navigationOptions = ({navigation}) => {
@@ -8,19 +14,98 @@ class QuizStarter extends Component {
     };
   };
 
+  constructor() {
+    super();
+
+    this.state = {
+      questions: null,
+      scores: null,
+    };
+  }
+
   render() {
-    console.log(this.props.navigation.getParam('quizId'));
+    console.log('Rendered', this.props.navigation.getParam('quizId'));
+    if (!this.state.questions) {
+      this.getQuestions();
+    }
+
+    if (!this.state.scores) {
+      this.getScores();
+    }
+
     return (
       <View style={styles.main}>
-        <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Quiz')}>
+        <TouchableOpacity
+          disabled={!this.state.questions}
+          style={styles.button}
+          onPress={() => {
+            this.props.navigation.navigate('Quiz', {
+              questions: this.state.questions,
+              quizId: this.props.navigation.getParam('quizId'),
+            });
+            this.setState({questions: null, scores: null});
+          }}>
           <Text style={styles.text}>START QUIZ</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          disabled={!this.state.scores}
+          onPress={() => {
+            this.props.navigation.navigate('Scores', {
+              quizName: this.props.navigation.getParam('quizName'),
+              scores: this.state.scores,
+            });
+            this.setState({questions: null, scores: null});
+          }}>
           <Text style={styles.text}>LEADERBOARD</Text>
         </TouchableOpacity>
       </View>
     );
   }
+
+  getQuestions = async () => {
+    console.log('Getting questions');
+    const token = await AsyncStorage.getItem('token');
+    const quizId = this.props.navigation.getParam('quizId');
+
+    const data = await fetch(
+      `https://se380api.herokuapp.com/quiz/${quizId}/questions`,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: token,
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    const resp = await data.json();
+    if (resp.success) {
+      this.setState({questions: resp.questions});
+    }
+  };
+
+  getScores = async () => {
+    console.log('Getting scores');
+    const token = await AsyncStorage.getItem('token');
+    const quizId = this.props.navigation.getParam('quizId');
+
+    const data = await fetch(
+      `https://se380api.herokuapp.com/quiz/${quizId}/scores`,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: token,
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    const resp = await data.json();
+    if (resp.success) {
+      this.setState({scores: resp.scores});
+    }
+  };
 }
 const styles = StyleSheet.create({
   main: {
@@ -31,7 +116,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 200,
-    backgroundColor:'rgba(21,31,40,0.30)',
+    backgroundColor: 'rgba(21,31,40,0.30)',
     borderRadius: 25,
     borderColor: 'rgba(21,31,40,1)',
     borderWidth: 3,

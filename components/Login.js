@@ -29,8 +29,8 @@ class Login extends Component {
           <TextInput
             style={styles.inputText}
             placeholder="Username"
-            placeholderTextColor='white'
-            onFocus= {() => this.setState({placeholder : 'a'})}
+            placeholderTextColor="white"
+            onFocus={() => this.setState({placeholder: 'a'})}
             onChangeText={(val) => this.setState({username: val})}
           />
         </View>
@@ -39,7 +39,7 @@ class Login extends Component {
             secureTextEntry
             style={styles.inputText}
             placeholder="Password"
-            placeholderTextColor='white'
+            placeholderTextColor="white"
             onChangeText={(val) => this.setState({pass: val})}
           />
         </View>
@@ -74,6 +74,7 @@ class Login extends Component {
     if (resp.success) {
       const token = resp.token;
       await AsyncStorage.setItem('token', token);
+      await AsyncStorage.setItem('username', this.state.username);
 
       this.props.navigation.navigate('Home', {initial: false});
     } else {
