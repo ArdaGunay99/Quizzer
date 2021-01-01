@@ -74,7 +74,6 @@ class Login extends Component {
     if (resp.success) {
       const token = resp.token;
       await AsyncStorage.setItem('token', token);
-      await AsyncStorage.setItem('username', this.state.username);
 
       this.props.navigation.navigate('Home', {initial: false});
     } else {

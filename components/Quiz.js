@@ -29,7 +29,7 @@ class Quiz extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.finished) {
-      // Send username and score to server
+      // Send score to server
       this.saveScore();
     }
 
@@ -164,7 +164,6 @@ class Quiz extends Component {
   saveScore = async () => {
     console.log('Saving score');
     const token = await AsyncStorage.getItem('token');
-    const username = await AsyncStorage.getItem('username');
     const quizId = this.props.navigation.getParam('quizId');
 
     const data = await fetch(
@@ -177,7 +176,6 @@ class Quiz extends Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username,
           score: this.state.points,
         }),
       },
