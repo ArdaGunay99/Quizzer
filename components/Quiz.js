@@ -97,8 +97,8 @@ class Quiz extends Component {
     if (this.state.finished === true) {
       return (
         <View style={styles.resultsMain}>
-          <Text style={styles.answerText}>QUIZ FINISHED</Text>
-          <Text style={styles.answerText}>Score: {this.state.points}</Text>
+          <Text style={styles.resultsText}>QUIZ FINISHED</Text>
+          <Text style={styles.resultsText}>Score: {this.state.points}</Text>
           <TouchableOpacity
             style={styles.resultsButton}
             onPress={() => this.props.navigation.navigate('QuizStarter')}>

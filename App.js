@@ -8,6 +8,7 @@ import HomeScreen from './components/Home';
 import Quiz from './components/Quiz';
 import Scores from './components/Scores';
 
+
 const AppNavigator = createStackNavigator(
   {
     Login: {
