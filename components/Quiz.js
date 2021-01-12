@@ -16,6 +16,7 @@ class Quiz extends Component {
     super(props);
 
     this.state = {
+      currentAnswer: '',
       questionIndex: 0,
       isAnswered: false,
       points: 0,
@@ -47,6 +48,7 @@ class Quiz extends Component {
             this.setState((previousState) => ({
               questionIndex: previousState.questionIndex + 1,
               isAnswered: false,
+              currentAnswer: '',
             })),
           3000,
         );
@@ -68,12 +70,13 @@ class Quiz extends Component {
       // increase score and set isAnswered to True so the right answer will be shown for 3 seconds
       this.setState((previousState) => ({
         isAnswered: true,
+        currentAnswer: answer,
         points:
           previousState.points +
           10 * this.state.questions[this.state.questionIndex].difficulty,
       }));
     } else {
-      this.setState({isAnswered: true});
+      this.setState({isAnswered: true, currentAnswer: answer,});
     }
   }
 
@@ -81,12 +84,22 @@ class Quiz extends Component {
   // This function works as intended
   PickColor(answer) {
     if (this.state.isAnswered === true) {
-      if (
-        answer === this.state.questions[this.state.questionIndex].correct_answer
-      ) {
-        return styles.rightAnswer;
-      } else {
-        return styles.wrongAnswer;
+      if (answer === this.state.currentAnswer) {
+        if (
+            answer === this.state.questions[this.state.questionIndex].correct_answer
+        ) {
+          return styles.pressedRightAnswer;
+        } else {
+          return styles.pressedWrongAnswer;
+        }
+      } else{
+        if (
+            answer === this.state.questions[this.state.questionIndex].correct_answer
+        ) {
+          return styles.rightAnswer;
+        } else {
+          return styles.wrongAnswer;
+        }
       }
     }
     return styles.answer;
@@ -271,6 +284,28 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     height: 100,
     borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 5,
+  },
+  pressedRightAnswer: {
+    width: '75%',
+    backgroundColor: 'green',
+    height: 100,
+    borderRadius: 10,
+    borderColor: 'yellow',
+    borderWidth: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 5,
+  },
+  pressedWrongAnswer: {
+    width: '75%',
+    backgroundColor: 'red',
+    height: 100,
+    borderRadius: 10,
+    borderColor: 'yellow',
+    borderWidth: 5,
     alignItems: 'center',
     justifyContent: 'center',
     margin: 5,
