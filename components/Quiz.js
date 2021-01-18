@@ -134,6 +134,7 @@ class Quiz extends Component {
             onFinish={() => this.QuestionAnswered(null)}
             running={!this.state.isAnswered}
             style={styles.countdown}
+            digitStyle={{backgroundColor: '#FFF'}}
             until={15}
             size={12}
             timeToShow={['S']}
@@ -211,8 +212,8 @@ const styles = StyleSheet.create({
     marginLeft: 70,
   },
   countdown: {
-    flex: 1,
-    backgroundColor: 'rgba(21,31,40,1)',
+    flex: 1
+
   },
   points: {
     flex: 1,

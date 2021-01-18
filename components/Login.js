@@ -30,7 +30,6 @@ class Login extends Component {
             style={styles.inputText}
             placeholder="Username"
             placeholderTextColor="white"
-            onFocus={() => this.setState({placeholder: 'a'})}
             onChangeText={(val) => this.setState({username: val})}
           />
         </View>
