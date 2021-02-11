@@ -64,6 +64,9 @@ class Home extends Component {
 
     return (
       <View style={styles.main}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('PersonalHistory')} >
+          <Text style={styles.categoryText}>Personal History</Text>
+        </TouchableOpacity>
         <Text style={styles.upperText}>CATEGORIES</Text>
         <SafeAreaView style={styles.scroll_container}>
           <ScrollView contentContainerStyle={styles.scrollView}>
@@ -132,6 +135,17 @@ class Home extends Component {
 }
 
 const styles = StyleSheet.create({
+  personalHistory:{
+    width: '50%',
+    backgroundColor: 'red',
+    height: 75,
+    borderRadius: 10,
+    borderColor: 'rgba(21,31,40,1)',
+    borderWidth: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 5,
+  },
   upperText: {
     fontSize: 24,
     color: 'white',
