@@ -16,12 +16,14 @@ class Quiz extends Component {
     super(props);
 
     this.state = {
+      tempPoints: 0,
       currentAnswer: '',
       questionIndex: 0,
       isAnswered: false,
       points: 0,
       finished: false,
       questions: props.navigation.getParam('questions'),
+      showAnswers: false,
     };
 
     this.QuestionAnswered = this.QuestionAnswered.bind(this);
@@ -34,7 +36,7 @@ class Quiz extends Component {
       this.saveScore();
     }
 
-    // not sure if the below code should be here or inside QuestionAnswered()
+
     // it is basically aimed to show the right answer for 3 seconds and then increment the question index by 1 so we move to the next question
     if (this.state.isAnswered === true) {
       if (this.state.questionIndex + 1 === this.state.questions.length) {
@@ -43,21 +45,28 @@ class Quiz extends Component {
           3000,
         );
       } else {
-        setTimeout(
-          () =>
-            this.setState((previousState) => ({
-              questionIndex: previousState.questionIndex + 1,
-              isAnswered: false,
-              currentAnswer: '',
-            })),
-          3000,
-        );
+        if (this.state.showAnswers === true) {
+          setTimeout(
+              () =>
+                  this.setState((previousState) => ({
+                    questionIndex: previousState.questionIndex + 1,
+                    isAnswered: false,
+                    currentAnswer: '',
+                    showAnswers: false,
+                    points: this.state.tempPoints,
+                  })),
+              3000,
+          );
+        } else{
+          setTimeout(()=> this.setState({
+            showAnswers: true
+          }), 2000)
+        }
       }
     }
   }
 
-  // this function will be called inside the OnPress prop of the TouchableOpacities like onPress={this.QuestionAnswered("A")}.
-  // Currently when I try this, component crashes without rendering and says infinite loop happened...
+
   QuestionAnswered(answer) {
     if (this.state.isAnswered) {
       // Skip if already answered
@@ -71,12 +80,12 @@ class Quiz extends Component {
       this.setState((previousState) => ({
         isAnswered: true,
         currentAnswer: answer,
-        points:
+        tempPoints:
           previousState.points +
           10 * this.state.questions[this.state.questionIndex].difficulty,
       }));
     } else {
-      this.setState({isAnswered: true, currentAnswer: answer,});
+      this.setState({isAnswered: true, currentAnswer: answer, tempPoints: this.state.points});
     }
   }
 
@@ -84,21 +93,29 @@ class Quiz extends Component {
   // This function works as intended
   PickColor(answer) {
     if (this.state.isAnswered === true) {
-      if (answer === this.state.currentAnswer) {
-        if (
-            answer === this.state.questions[this.state.questionIndex].correct_answer
-        ) {
-          return styles.pressedRightAnswer;
+      if (this.state.showAnswers === true) {
+        if (answer === this.state.currentAnswer) {
+          if (
+              answer === this.state.questions[this.state.questionIndex].correct_answer
+          ) {
+            return styles.pressedRightAnswer;
+          } else {
+            return styles.pressedWrongAnswer;
+          }
         } else {
-          return styles.pressedWrongAnswer;
+          if (
+              answer === this.state.questions[this.state.questionIndex].correct_answer
+          ) {
+            return styles.rightAnswer;
+          } else {
+            return styles.wrongAnswer;
+          }
         }
       } else{
-        if (
-            answer === this.state.questions[this.state.questionIndex].correct_answer
-        ) {
-          return styles.rightAnswer;
-        } else {
-          return styles.wrongAnswer;
+        if(answer === this.state.currentAnswer){
+          return styles.pressedAnswer;
+        } else{
+          return styles.answer;
         }
       }
     }
@@ -303,6 +320,17 @@ const styles = StyleSheet.create({
   pressedWrongAnswer: {
     width: '75%',
     backgroundColor: 'red',
+    height: 100,
+    borderRadius: 10,
+    borderColor: 'rgba(21,31,40,1)',
+    borderWidth: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 5,
+  },
+  pressedAnswer:{
+    width: '75%',
+    backgroundColor: 'rgba(21,31,40,0.30)',
     height: 100,
     borderRadius: 10,
     borderColor: 'rgba(21,31,40,1)',
