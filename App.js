@@ -9,7 +9,6 @@ import Quiz from './components/Quiz';
 import Scores from './components/Scores';
 import PersonalHistory from './components/PersonalHistory';
 
-
 const AppNavigator = createStackNavigator(
   {
     Login: {
@@ -33,8 +32,8 @@ const AppNavigator = createStackNavigator(
     Scores: {
       screen: Scores,
     },
-    PersonalHistory:{
-        screen: PersonalHistory,
+    PersonalHistory: {
+      screen: PersonalHistory,
     },
     Home: {
       screen: HomeScreen,

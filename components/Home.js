@@ -64,7 +64,9 @@ class Home extends Component {
 
     return (
       <View style={styles.main}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('PersonalHistory')} >
+        <TouchableOpacity
+          style={styles.personalHistory}
+          onPress={() => this.getPersonalHistory()}>
           <Text style={styles.categoryText}>Personal History</Text>
         </TouchableOpacity>
         <Text style={styles.upperText}>CATEGORIES</Text>
@@ -123,6 +125,25 @@ class Home extends Component {
     }
   };
 
+  getPersonalHistory = async () => {
+    console.log('Getting personal history');
+    const token = await AsyncStorage.getItem('token');
+    const data = await fetch('https://se380api.herokuapp.com/user/history', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+    });
+    const resp = await data.json();
+    if (resp.success) {
+      this.props.navigation.navigate('PersonalHistory', {
+        scores: resp.history,
+      });
+    }
+  };
+
   static logout = async (navigate) => {
     try {
       await AsyncStorage.removeItem('token');
@@ -135,22 +156,23 @@ class Home extends Component {
 }
 
 const styles = StyleSheet.create({
-  personalHistory:{
+  personalHistory: {
     width: '50%',
-    backgroundColor: 'red',
+    backgroundColor: 'rgba(21,31,40,0.30)',
     height: 75,
     borderRadius: 10,
     borderColor: 'rgba(21,31,40,1)',
     borderWidth: 3,
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 5,
+    margin: 10,
   },
   upperText: {
     fontSize: 24,
     color: 'white',
     fontWeight: 'bold',
-    marginTop: 70,
+    marginTop: 10,
     marginBottom: 20,
     marginLeft: 120,
   },
@@ -172,12 +194,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollView: {
+    flex: 1,
     flexGrow: 1,
     alignItems: 'center',
+    // alignItems: 'flex-start', // if you want to fill rows left to right
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginLeft: 10,
   },
 
   topic: {
-    width: '75%',
+    width: '45%',
     backgroundColor: 'rgba(21,31,40,0.30)',
     height: 100,
     borderRadius: 10,

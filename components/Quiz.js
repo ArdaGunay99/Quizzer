@@ -36,36 +36,37 @@ class Quiz extends Component {
       this.saveScore();
     }
 
-
     // it is basically aimed to show the right answer for 3 seconds and then increment the question index by 1 so we move to the next question
     if (this.state.isAnswered === true) {
-      if (this.state.questionIndex + 1 === this.state.questions.length) {
-        setTimeout(
-          () => this.setState({finished: true, isAnswered: false}),
-          3000,
-        );
+      if (this.state.showAnswers === true) {
+        setTimeout(() => {
+          if (this.state.questionIndex + 1 === this.state.questions.length) {
+            this.setState({
+              finished: true,
+              isAnswered: false,
+              points: this.state.tempPoints,
+            });
+          } else {
+            this.setState((previousState) => ({
+              questionIndex: previousState.questionIndex + 1,
+              isAnswered: false,
+              currentAnswer: '',
+              showAnswers: false,
+              points: this.state.tempPoints,
+            }));
+          }
+        }, 3000);
       } else {
-        if (this.state.showAnswers === true) {
-          setTimeout(
-              () =>
-                  this.setState((previousState) => ({
-                    questionIndex: previousState.questionIndex + 1,
-                    isAnswered: false,
-                    currentAnswer: '',
-                    showAnswers: false,
-                    points: this.state.tempPoints,
-                  })),
-              3000,
-          );
-        } else{
-          setTimeout(()=> this.setState({
-            showAnswers: true
-          }), 2000)
-        }
+        setTimeout(
+          () =>
+            this.setState({
+              showAnswers: true,
+            }),
+          2000,
+        );
       }
     }
   }
-
 
   QuestionAnswered(answer) {
     if (this.state.isAnswered) {
@@ -85,7 +86,11 @@ class Quiz extends Component {
           10 * this.state.questions[this.state.questionIndex].difficulty,
       }));
     } else {
-      this.setState({isAnswered: true, currentAnswer: answer, tempPoints: this.state.points});
+      this.setState({
+        isAnswered: true,
+        currentAnswer: answer,
+        tempPoints: this.state.points,
+      });
     }
   }
 
@@ -96,7 +101,8 @@ class Quiz extends Component {
       if (this.state.showAnswers === true) {
         if (answer === this.state.currentAnswer) {
           if (
-              answer === this.state.questions[this.state.questionIndex].correct_answer
+            answer ===
+            this.state.questions[this.state.questionIndex].correct_answer
           ) {
             return styles.pressedRightAnswer;
           } else {
@@ -104,17 +110,18 @@ class Quiz extends Component {
           }
         } else {
           if (
-              answer === this.state.questions[this.state.questionIndex].correct_answer
+            answer ===
+            this.state.questions[this.state.questionIndex].correct_answer
           ) {
             return styles.rightAnswer;
           } else {
             return styles.wrongAnswer;
           }
         }
-      } else{
-        if(answer === this.state.currentAnswer){
+      } else {
+        if (answer === this.state.currentAnswer) {
           return styles.pressedAnswer;
-        } else{
+        } else {
           return styles.answer;
         }
       }
@@ -229,8 +236,7 @@ const styles = StyleSheet.create({
     marginLeft: 70,
   },
   countdown: {
-    flex: 1
-
+    flex: 1,
   },
   points: {
     flex: 1,
@@ -328,7 +334,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     margin: 5,
   },
-  pressedAnswer:{
+  pressedAnswer: {
     width: '75%',
     backgroundColor: 'rgba(21,31,40,0.30)',
     height: 100,
